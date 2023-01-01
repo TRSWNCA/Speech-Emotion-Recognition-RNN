@@ -29,13 +29,10 @@ def frame_sig(sig, frame_len, frame_step, win_func):
     '''
     slen = len(sig)
 
-    if slen <= frame_len:
-        num_frames = 7
-    else:
-        # np.ceil(), 向上取整
-        num_frames = 1 + int(np.ceil((slen - frame_len) / frame_step))
+    num_frames = 10
+    frame_step = slen / num_frames
+    padlen = int(num_frames * frame_step + frame_len)
 
-    padlen = int((num_frames - 1) * frame_step + frame_len)
     # 将信号补长，使得(slen - frame_len) /frame_step整除
     zeros = np.zeros((padlen - slen,))
     padSig = np.concatenate((sig, zeros))
